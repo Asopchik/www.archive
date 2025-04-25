@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Контакты - archive</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding-top: 80px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+        }
+
+        header.fixed-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #222;
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        nav.dropdown {
+            position: relative;
+        }
+
+        .dropbtn {
+            background-color: #444;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #555;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #222;
+            color: white;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<header class="fixed-header">
+    <h1>archive</h1>
+    <nav class="dropdown">
+        <button class="dropbtn">Меню</button>
+        <div class="dropdown-content">
+            <a href="index.html">Главная</a>
+            <a href="about.html">О нас</a>
+            <a href="contact.html">Контакты</a>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <h2>Форма обратной связи</h2>
+    <form id="feedbackForm">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="message">Сообщение:</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+
+        <button type="submit">Отправить</button>
+    </form>
+</main>
+
+<footer>
+    <p>&copy; 2025 archive</p>
+</footer>
+
+<script>
+    document.getElementById('feedbackForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var name = document.getElementById('name').value;
+        var message = document.getElementById('message').value;
+
+        var telegramMessage = `Получено новое сообщение:\nИмя: ${name}\nСообщение: ${message}`;
+
+        var botToken = '7712502688:AAEA8I09hnl-WQDA0ELc_wdpM01M7kLWuV8';
+        var chatId = '835413131';
+
+        var url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(telegramMessage)}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    alert('Ваше сообщение отправлено!');
+                } else {
+                    alert('Ошибка при отправке сообщения');
+                }
+            })
+            .catch(error => {
+                alert('Ошибка при отправке запроса');
+            });
+
+        document.getElementById('feedbackForm').reset();
+    });
+</script>
+
+</body>
+</html>

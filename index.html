@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>archive</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <style>
+        h2 {
+            color: lime;
+            margin-top: 60px;
+        }
+        .highlight {
+            color: #0f0;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <nav class="nav-left">
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="about.html">О нас</a></li>
+                    <li><a href="contact.html">Контакты</a></li>
+                </ul>
+            </nav>
+            <h1 style="font-family: 'Orbitron', sans-serif;">archive</h1>
+            <div class="user-area">
+                <button id="authBtn" onclick="openModal()">Войти / Регистрация</button>
+                <div class="user-info" id="userInfo"></div>
+            </div>
+        </div>
+    </header>
+    
+    
+
+    <main>
+        <h2>Сделанный для лабораторной работы</h2>
+        <p class="highlight">
+            Перейти к статьям:
+            <a href="#section1">📡 Инопланетяне</a> |
+            <a href="#section2">🦎 Ящерицы</a>
+        </p>
+        
+
+        <h3 id="section1">Тайны Вселенной: <strong>Инопланетяне</strong> среди нас?</h3>
+        <div class="article">
+            <p><strong>Инопланетяне</strong> — одна из самых обсуждаемых тем в культуре и науке.<br/>Вот несколько фактов:</p>
+            <ul>
+                <li>Странные сигналы из космоса</li>
+                <li>Наблюдения в небе</li>
+                <li>Свидетельства очевидцев</li>
+            </ul>
+            <p><em>Ученые</em> всё ещё не пришли к единому мнению.<br/>Одни уверены, что это галлюцинации, другие — что это правда.</p>
+            <img src="img1.jpg" alt="Инопланетяне" class="fade-in">
+        </div>
+
+        <h3 id="section2">Фантастический мир: <strong>Ящерицы</strong>, которых вы не знали</h3>
+        <div class="article">
+            <p><strong>Ящерицы</strong> удивляют своим разнообразием.<br/>Интересные факты:</p>
+            <ol>
+                <li>Гекконы могут бегать по стенам</li>
+                <li>Базилиски бегают по воде</li>
+                <li>Хамелеоны меняют цвет</li>
+            </ol>
+            <p><em>Учёные</em> изучают их, чтобы создавать новые технологии</p>
+            <img src="img2.jpg" alt="Ящерица" class="fade-in">
+        </div>
+
+        <h4>Видео на тему:</h4>
+        <video width="400" controls>
+            <source src="sample.mp4" type="video/mp4">
+            Ваш браузер не поддерживает видео.
+        </video>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 archive</p>
+    </footer>
+    <!-- Кнопка открытия модального окна -->
+
+
+<!-- Модальное окно -->
+<div id="authModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="formTitle">Регистрация</h2>
+
+        <div style="margin-bottom: 10px;">
+            <button onclick="toggleForm('register')">Регистрация</button>
+            <button onclick="toggleForm('login')">Вход</button>
+        </div>
+
+        <!-- Регистрация -->
+        <form id="registerForm" class="authForm">
+            <input type="text" id="firstName" placeholder="Имя" required>
+            <div class="message" id="firstNameError"></div>
+
+            <input type="text" id="lastName" placeholder="Фамилия" required>
+            <div class="message" id="lastNameError"></div>
+
+            <input type="number" id="age" placeholder="Возраст" min="14" max="120" required>
+            <div class="message" id="ageError"></div>
+
+            <input type="email" id="email" placeholder="Email" required>
+            <div class="message" id="emailError"></div>
+
+            <input type="password" id="password" placeholder="Пароль" minlength="6" required>
+            <div class="message" id="passwordError"></div>
+
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+
+        <!-- Вход -->
+        <form id="loginForm" class="authForm" style="display:none;">
+            <input type="text" id="loginName" placeholder="Имя" required>
+            <input type="password" id="loginPassword" placeholder="Пароль" required>
+            <button type="submit">Войти</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openModal() {
+        document.getElementById('authModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('authModal').style.display = 'none';
+    }
+
+    function toggleForm(type) {
+        const registerForm = document.getElementById('registerForm');
+        const loginForm = document.getElementById('loginForm');
+        const formTitle = document.getElementById('formTitle');
+
+        if (type === 'register') {
+            registerForm.style.display = 'block';
+            loginForm.style.display = 'none';
+            formTitle.textContent = 'Регистрация';
+        } else {
+            registerForm.style.display = 'none';
+            loginForm.style.display = 'block';
+            formTitle.textContent = 'Вход';
+        }
+    }
+
+    window.onclick = function(event) {
+        if (event.target === document.getElementById('authModal')) {
+            closeModal();
+        }
+    }
+
+    // Регистрация
+    const regForm = document.getElementById('registerForm');
+    regForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const nameRegex = /^[А-ЯЁ][а-яё]+$/;
+        const firstName = document.getElementById('firstName');
+        const lastName = document.getElementById('lastName');
+        // Автоматически делаем первую букву заглавной, остальные строчными
+        firstName.value = capitalize(firstName.value);
+        lastName.value = capitalize(lastName.value);
+
+        const age = document.getElementById('age');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+
+        let valid = true;
+        document.querySelectorAll('.message').forEach(m => m.textContent = '');
+
+        if (!nameRegex.test(firstName.value)) {
+            showError(firstName, 'Имя: с заглавной буквы и только буквы');
+            valid = false;
+        }
+        if (!nameRegex.test(lastName.value)) {
+            showError(lastName, 'Фамилия: с заглавной буквы и только буквы');
+            valid = false;
+        }
+        if (age.value < 14 || age.value > 120) {
+            showError(age, 'Возраст должен быть от 14 до 120');
+            valid = false;
+        }
+        if (!email.validity.valid) {
+            showError(email, 'Неверный email');
+            valid = false;
+        }
+        if (password.value.length < 6) {
+            showError(password, 'Пароль минимум 6 символов');
+            valid = false;
+        }
+
+        if (valid) {
+            showUserName(firstName.value);
+            closeModal();
+        }
+    });
+    function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+    document.getElementById('firstName').addEventListener('input', function () {
+        this.value = capitalize(this.value);
+});
+
+    document.getElementById('lastName').addEventListener('input', function () {
+        this.value = capitalize(this.value);
+});
+
+
+    // Вход
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const loginName = document.getElementById('loginName');
+        showUserName(loginName.value);
+        closeModal();
+    });
+
+    function showError(input, message) {
+        document.getElementById(input.id + 'Error').textContent = message;
+    }
+
+    function showUserName(name) {
+        document.getElementById('userInfo').textContent = `Добро пожаловать, ${name}!`;
+    }
+
+    function showUserName(name) {
+    document.getElementById('userInfo').textContent = `Добро пожаловать, ${name}!`;
+    document.getElementById('authBtn').style.display = 'none'; // скрыть кнопку
+}
+
+</script>
+
+
+</body>
+</html>
